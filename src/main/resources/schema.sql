@@ -1,0 +1,39 @@
+DROP TABLE IF EXISTS reviews;
+DROP TABLE IF EXISTS games;
+DROP TABLE IF EXISTS user_roles;
+DROP TABLE IF EXISTS roles;
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE IF NOT EXISTS games(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(50) NOT NULL,
+    genre VARCHAR(30) NOT NULL,
+    rating INT,
+    release_year DATE
+);
+
+CREATE TABLE IF NOT EXISTS reviews(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    review TEXT NOT NULL,
+    game_id BIGINT,
+    FOREIGN KEY(game_id) REFERENCES games(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS roles(
+        id BIGINT PRIMARY KEY AUTO_INCREMENT,
+        name VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS users(
+        id BIGINT PRIMARY KEY AUTO_INCREMENT,
+        username VARCHAR(40) NOT NULL,
+        password VARCHAR(80) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS user_roles(
+        id BIGINT PRIMARY KEY AUTO_INCREMENT,
+        user_id BIGINT,
+        role_id BIGINT,
+        FOREIGN KEY(user_id) REFERENCES users(id),
+        FOREIGN KEY(role_id) REFERENCES roles(id)
+);
