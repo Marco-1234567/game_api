@@ -4,6 +4,8 @@ import exercise_security.game_api.dto.GameRequestDTO;
 import exercise_security.game_api.dto.GameResponseDTO;
 import exercise_security.game_api.model.Game;
 import exercise_security.game_api.repository.GameRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -91,6 +93,22 @@ public class GameService {
         }
 
         return null;
+    }
+
+    public List<GameResponseDTO> searchByTitle(String title){
+        return repo.searchByTitle(title)
+                .stream()
+                .map(this::toGameResponseDTO).toList();
+    }
+
+    public Page<GameResponseDTO> searchByTitle2(String title, Pageable pageable){
+
+        Page<Game> gamePage = repo.searchByTitle2(title, pageable);
+
+        //Page<GameResponseDTO> dto = gamePage.map(game1 -> new GameResponseDTO(game1.getTitle(), game1.getGenre(), game1.getRating(), game1.getReleaseYear()));
+
+        Page<GameResponseDTO> dto = gamePage.map(game1 -> toGameResponseDTO(game1));
+        return dto;
     }
 
     private Game toGameEntity(GameRequestDTO dto){
