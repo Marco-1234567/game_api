@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS games(
     title VARCHAR(50) NOT NULL,
     genre VARCHAR(30) NOT NULL,
     rating INT,
-    release_year DATE
+    release_year INT
 );
 
 CREATE TABLE IF NOT EXISTS reviews(
