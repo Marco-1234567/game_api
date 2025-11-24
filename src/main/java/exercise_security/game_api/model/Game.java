@@ -19,7 +19,7 @@ public class Game {
 
     private Integer rating;
 
-    private LocalDate releaseYear;
+    private Integer releaseYear;
 
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL)
     List<Review> reviews;
@@ -27,14 +27,14 @@ public class Game {
     public Game() {
     }
 
-    public Game( String title, String genre, Integer rating, LocalDate releaseYear) {
+    public Game( String title, String genre, Integer rating, Integer releaseYear) {
         this.title = title;
         this.genre = genre;
         this.rating = rating;
         this.releaseYear = releaseYear;
     }
 
-    public Game(Long id, String title, String genre, Integer rating, LocalDate releaseYear) {
+    public Game(Long id, String title, String genre, Integer rating, Integer releaseYear) {
         this.id = id;
         this.title = title;
         this.genre = genre;
@@ -74,11 +74,11 @@ public class Game {
         this.rating = rating;
     }
 
-    public LocalDate getReleaseYear() {
+    public Integer getReleaseYear() {
         return releaseYear;
     }
 
-    public void setReleaseYear(LocalDate releaseYear) {
+    public void setReleaseYear(Integer releaseYear) {
         this.releaseYear = releaseYear;
     }
 }

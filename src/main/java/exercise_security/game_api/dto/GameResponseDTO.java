@@ -7,9 +7,9 @@ public class GameResponseDTO {
     private String title;
     private String genre;
     private Integer rating;
-    private LocalDate releaseYear;
+    private Integer releaseYear;
 
-    public GameResponseDTO(String title, String genre, Integer rating, LocalDate releaseYear) {
+    public GameResponseDTO(String title, String genre, Integer rating, Integer releaseYear) {
         this.title = title;
         this.genre = genre;
         this.rating = rating;
@@ -40,11 +40,11 @@ public class GameResponseDTO {
         this.rating = rating;
     }
 
-    public LocalDate getReleaseYear() {
+    public Integer getReleaseYear() {
         return releaseYear;
     }
 
-    public void setReleaseYear(LocalDate releaseYear) {
+    public void setReleaseYear(Integer releaseYear) {
         this.releaseYear = releaseYear;
     }
 }

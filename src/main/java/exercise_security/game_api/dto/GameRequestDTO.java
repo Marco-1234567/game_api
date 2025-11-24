@@ -23,10 +23,10 @@ public class GameRequestDTO {
     @Max(value = 10, message = "Rating, maximum 10.")
     private Integer rating;
 
-    @DateTimeFormat( pattern = "yyyy")
-    private LocalDate releaseYear;
+    @Min(1900)
+    private Integer releaseYear;
 
-    public GameRequestDTO(String title, String genre, Integer rating, LocalDate releaseYear) {
+    public GameRequestDTO(String title, String genre, Integer rating, Integer releaseYear) {
         this.title = title;
         this.genre = genre;
         this.rating = rating;
@@ -57,11 +57,11 @@ public class GameRequestDTO {
         this.rating = rating;
     }
 
-    public LocalDate getReleaseYear() {
+    public Integer getReleaseYear() {
         return releaseYear;
     }
 
-    public void setReleaseYear(LocalDate releaseYear) {
+    public void setReleaseYear(Integer releaseYear) {
         this.releaseYear = releaseYear;
     }
 }

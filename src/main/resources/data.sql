@@ -1,7 +1,7 @@
 INSERT INTO games(title, genre, rating, release_year)
 VALUES
-    ("The Game", "Horror", 10, "2010-01-01"),
-     ("Mississippi River", "Adventure", 8, "2020-02-02");
+    ("The Game", "Horror", 10, "2010"),
+     ("Mississippi River", "Adventure", 8, "2020");
 
 INSERT INTO reviews(review, game_id) VALUES
     ("A master pice!", 1),
