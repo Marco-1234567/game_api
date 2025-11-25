@@ -8,13 +8,13 @@ CREATE TABLE IF NOT EXISTS games(
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(50) NOT NULL,
     genre VARCHAR(30) NOT NULL,
-    rating INT,
     release_year INT
 );
 
 CREATE TABLE IF NOT EXISTS reviews(
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     review TEXT NOT NULL,
+    rating INT,
     game_id BIGINT,
     FOREIGN KEY(game_id) REFERENCES games(id) ON DELETE CASCADE
 );

@@ -17,6 +17,7 @@ public class PublicController {
 
     private final GameService service;
 
+
     public PublicController(GameService service) {
         this.service = service;
     }

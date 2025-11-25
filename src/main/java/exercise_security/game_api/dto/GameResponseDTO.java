@@ -6,13 +6,11 @@ public class GameResponseDTO {
 
     private String title;
     private String genre;
-    private Integer rating;
     private Integer releaseYear;
 
-    public GameResponseDTO(String title, String genre, Integer rating, Integer releaseYear) {
+    public GameResponseDTO(String title, String genre, Integer releaseYear) {
         this.title = title;
         this.genre = genre;
-        this.rating = rating;
         this.releaseYear = releaseYear;
     }
 
@@ -30,14 +28,6 @@ public class GameResponseDTO {
 
     public void setGenre(String genre) {
         this.genre = genre;
-    }
-
-    public Integer getRating() {
-        return rating;
-    }
-
-    public void setRating(Integer rating) {
-        this.rating = rating;
     }
 
     public Integer getReleaseYear() {
