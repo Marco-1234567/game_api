@@ -37,9 +37,6 @@ public class GameService {
         return Optional.of( toGameResponseDTO( repo.save( toGameEntity( requestDTO))));
     }
 
-    // update
-
-
     public boolean deteteById(Long id){
 
         if (repo.existsById(id)){
@@ -56,7 +53,6 @@ public class GameService {
         if (existing.isPresent()){
             existing.get().setTitle( gameRequestDTO.getTitle());
             existing.get().setGenre( gameRequestDTO.getGenre());
-            existing.get().setRating( gameRequestDTO.getRating());
             existing.get().setReleaseYear( gameRequestDTO.getReleaseYear());
             repo.save(existing.get());
         return toGameResponseDTO(existing.get());
@@ -80,10 +76,6 @@ public class GameService {
                 existing.get().setGenre( gameRequestDTO.getGenre());
             }
 
-            if (gameRequestDTO.getRating() != null){
-                existing.get().setRating( gameRequestDTO.getRating());
-            }
-
             if (gameRequestDTO.getReleaseYear() != null){
                 existing.get().setReleaseYear( gameRequestDTO.getReleaseYear());
             }
@@ -105,17 +97,15 @@ public class GameService {
 
         Page<Game> gamePage = repo.searchByTitle2(title, pageable);
 
-        //Page<GameResponseDTO> dto = gamePage.map(game1 -> new GameResponseDTO(game1.getTitle(), game1.getGenre(), game1.getRating(), game1.getReleaseYear()));
-
         Page<GameResponseDTO> dto = gamePage.map(game1 -> toGameResponseDTO(game1));
         return dto;
     }
 
     private Game toGameEntity(GameRequestDTO dto){
-        return new Game(dto.getTitle(), dto.getGenre(), dto.getRating(), dto.getReleaseYear());
+        return new Game(dto.getTitle(), dto.getGenre(), dto.getReleaseYear());
     }
 
     private GameResponseDTO toGameResponseDTO(Game game){
-        return new GameResponseDTO( game.getTitle(), game.getGenre(), game.getRating(), game.getReleaseYear() );
+        return new GameResponseDTO( game.getTitle(), game.getGenre(), game.getReleaseYear());
     }
 }

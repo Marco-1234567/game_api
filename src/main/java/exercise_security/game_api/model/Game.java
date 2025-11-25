@@ -12,13 +12,8 @@ public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String title;
-
     private String genre;
-
-    private Integer rating;
-
     private Integer releaseYear;
 
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL)
@@ -27,18 +22,16 @@ public class Game {
     public Game() {
     }
 
-    public Game( String title, String genre, Integer rating, Integer releaseYear) {
+    public Game( String title, String genre, Integer releaseYear) {
         this.title = title;
         this.genre = genre;
-        this.rating = rating;
         this.releaseYear = releaseYear;
     }
 
-    public Game(Long id, String title, String genre, Integer rating, Integer releaseYear) {
+    public Game(Long id, String title, String genre, Integer releaseYear) {
         this.id = id;
         this.title = title;
         this.genre = genre;
-        this.rating = rating;
         this.releaseYear = releaseYear;
     }
 
@@ -64,14 +57,6 @@ public class Game {
 
     public void setGenre(String genre) {
         this.genre = genre;
-    }
-
-    public Integer getRating() {
-        return rating;
-    }
-
-    public void setRating(Integer rating) {
-        this.rating = rating;
     }
 
     public Integer getReleaseYear() {

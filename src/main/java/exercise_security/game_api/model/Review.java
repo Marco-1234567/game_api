@@ -12,6 +12,8 @@ public class Review {
 
     private String review;
 
+    private Integer rating;
+
     @ManyToOne
     @JoinColumn(name="game_id")
     private Game game;
@@ -19,9 +21,15 @@ public class Review {
     public Review() {
     }
 
-    public Review(Long id, String review) {
+    public Review(String review, Integer rating) {
+        this.review = review;
+        this.rating = rating;
+    }
+
+    public Review(Long id, String review, Integer rating) {
         this.id = id;
         this.review = review;
+        this.rating = rating;
     }
 
     public Long getId() {
@@ -38,5 +46,21 @@ public class Review {
 
     public void setReview(String review) {
         this.review = review;
+    }
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 }

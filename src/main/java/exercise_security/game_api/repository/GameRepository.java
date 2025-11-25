@@ -15,7 +15,7 @@ public interface GameRepository extends JpaRepository<Game, Long> {
 
     // Kom ihåg!
     // public behövs ej. Allt är public i ett interface
-    // Använd Moell/Entity namn i Query. Inte databasens tabellnamn. (JPA vill ha det så)
+    // Använd Model/Entity namn i Query. Inte databasens tabellnamn. (JPA vill ha det så)
 
     @Query("SELECT g FROM Game g WHERE LOWER(g.title) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Game> searchByTitle(@Param("keyword") String keyword);

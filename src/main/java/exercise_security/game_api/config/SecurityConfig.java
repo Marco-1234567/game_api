@@ -41,8 +41,9 @@ public class SecurityConfig {
                 )
                 //.userDetailsService(customUserDetailService)
                 //.userDetailsService(userDetailsService())
-                //.httpBasic(Customizer.withDefaults())
-                .addFilterBefore(jwtfilter, UsernamePasswordAuthenticationFilter.class);;
+                //.httpBasic(Customizer.withDefaults());
+                .addFilterBefore(jwtfilter, UsernamePasswordAuthenticationFilter.class);
+
 
         return http.build();
 
