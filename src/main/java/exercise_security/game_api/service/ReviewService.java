@@ -36,7 +36,7 @@ public class ReviewService {
         return new Review( reviewRequestDTO.getReview(), reviewRequestDTO.getRating());
     }
 
-    private ReviewResponseDTO toReviewResponseDTO( Review review ){
+    public ReviewResponseDTO toReviewResponseDTO( Review review ){
         return new ReviewResponseDTO(review.getReview(), review.getRating());
     }
 }

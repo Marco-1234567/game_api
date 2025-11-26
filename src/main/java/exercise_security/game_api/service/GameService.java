@@ -2,26 +2,33 @@ package exercise_security.game_api.service;
 
 import exercise_security.game_api.dto.GameRequestDTO;
 import exercise_security.game_api.dto.GameResponseDTO;
+import exercise_security.game_api.dto.ReviewResponseDTO;
 import exercise_security.game_api.model.Game;
+import exercise_security.game_api.model.Review;
 import exercise_security.game_api.repository.GameRepository;
+import exercise_security.game_api.repository.ReviewRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class GameService {
     private final GameRepository repo;
+    private final ReviewService reviewService;
 
-    public GameService(GameRepository repo) {
+    public GameService(GameRepository repo, ReviewRepository reviewRepo, ReviewService reviewService) {
         this.repo = repo;
+        this.reviewService = reviewService;
     }
 
     public List<GameResponseDTO> getAll(){
 
-        return repo.findAll().stream().map(g -> toGameResponseDTO(g)).toList();
+        return repo.findAll().stream().map(this::toGameResponseDTO).toList();
     }
 
     public Optional<GameResponseDTO> getById(Long id){
@@ -106,6 +113,11 @@ public class GameService {
     }
 
     private GameResponseDTO toGameResponseDTO(Game game){
-        return new GameResponseDTO( game.getTitle(), game.getGenre(), game.getReleaseYear());
+
+        Set<ReviewResponseDTO> reviews = game.getReviews() != null
+                ? game.getReviews().stream().map(reviewService::toReviewResponseDTO).collect(Collectors.toSet())
+                : Set.of();
+
+        return new GameResponseDTO( game.getTitle(), game.getGenre(), game.getReleaseYear(), reviews);
     }
 }
