@@ -3,12 +3,15 @@ package exercise_security.game_api.service;
 import exercise_security.game_api.dto.GameRequestDTO;
 import exercise_security.game_api.dto.GameResponseDTO;
 import exercise_security.game_api.dto.ReviewResponseDTO;
+import exercise_security.game_api.exception.BadRequestException;
+import exercise_security.game_api.exception.ResourceNotFoundException;
 import exercise_security.game_api.model.Game;
 import exercise_security.game_api.model.Review;
 import exercise_security.game_api.repository.GameRepository;
 import exercise_security.game_api.repository.ReviewRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,12 +34,12 @@ public class GameService {
         return repo.findAll().stream().map(this::toGameResponseDTO).toList();
     }
 
-    public Optional<GameResponseDTO> getById(Long id){
+    public ResponseEntity<GameResponseDTO> getById(Long id) throws RuntimeException {
 
         if (repo.findById(id).isPresent()){
-            return Optional.of( toGameResponseDTO( repo.findById(id).get()));
+            return ResponseEntity.ok(toGameResponseDTO( repo.findById(id).get()));
         } else {
-            return Optional.empty();
+            throw new ResourceNotFoundException("Can't find Game with id = " + id );
         }
     }
 
@@ -53,7 +56,7 @@ public class GameService {
         return false;
     }
 
-    public GameResponseDTO updateGame(Long id,  GameRequestDTO gameRequestDTO){
+    public GameResponseDTO updateGame(Long id, GameRequestDTO gameRequestDTO) {
 
         Optional<Game> existing = repo.findById(id);
 
@@ -63,9 +66,10 @@ public class GameService {
             existing.get().setReleaseYear( gameRequestDTO.getReleaseYear());
             repo.save(existing.get());
         return toGameResponseDTO(existing.get());
-        }
 
-        return null;
+        } else {
+            throw new ResourceNotFoundException("Can't find Game with id = " + id );
+        }
     }
 
     ///
@@ -88,10 +92,12 @@ public class GameService {
             }
 
             repo.save(existing.get());
-            return toGameResponseDTO(existing.get());
-        }
 
-        return null;
+            return toGameResponseDTO(existing.get());
+
+        } else{
+            throw new ResourceNotFoundException("Can't find Game with id = " + id );
+        }
     }
 
     public List<GameResponseDTO> searchByTitle(String title){
