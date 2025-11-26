@@ -29,8 +29,6 @@ public class PublicController {
 
     @GetMapping("/{id}")
     public ResponseEntity<GameResponseDTO> getById(@PathVariable Long id){
-        return service.getById(id).map(game -> ResponseEntity.ok(game)).orElse(ResponseEntity.status(418).build());
+        return service.getById(id);//.map(game -> ResponseEntity.ok(game)).orElse(ResponseEntity.status(418).build());
     }
-
-
 }

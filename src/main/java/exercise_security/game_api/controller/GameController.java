@@ -4,6 +4,7 @@ import exercise_security.game_api.dto.GameRequestDTO;
 import exercise_security.game_api.dto.GameResponseDTO;
 import exercise_security.game_api.dto.ReviewRequestDTO;
 import exercise_security.game_api.dto.ReviewResponseDTO;
+import exercise_security.game_api.exception.ResourceNotFoundException;
 import exercise_security.game_api.service.GameService;
 import exercise_security.game_api.service.ReviewService;
 import jakarta.validation.Valid;
@@ -15,7 +16,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Validated
 @RestController
@@ -37,7 +37,10 @@ public class GameController {
 
     @GetMapping("/{id}")
     public ResponseEntity<GameResponseDTO> getById(@Valid @PathVariable Long id){
-        return service.getById(id).map(game -> ResponseEntity.ok(game)).orElse(ResponseEntity.status(418).build());
+
+        return service.getById(id);
+                //.map(game -> ResponseEntity.ok(game))
+                //.orElseThrow( () -> new ResourceNotFoundException("Can't find Game with id = " + id ));
     }
 
     @PostMapping
