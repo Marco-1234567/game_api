@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="games")
@@ -17,7 +18,7 @@ public class Game {
     private Integer releaseYear;
 
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL)
-    List<Review> reviews;
+    Set<Review> reviews;
 
     public Game() {
     }
@@ -65,5 +66,13 @@ public class Game {
 
     public void setReleaseYear(Integer releaseYear) {
         this.releaseYear = releaseYear;
+    }
+
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = reviews;
     }
 }

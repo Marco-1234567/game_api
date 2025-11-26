@@ -1,17 +1,20 @@
 package exercise_security.game_api.dto;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 public class GameResponseDTO {
 
     private String title;
     private String genre;
     private Integer releaseYear;
+    private Set<ReviewResponseDTO> reviewResponseDTO;
 
-    public GameResponseDTO(String title, String genre, Integer releaseYear) {
+    public GameResponseDTO(String title, String genre, Integer releaseYear, Set<ReviewResponseDTO> reviewResponseDTO) {
         this.title = title;
         this.genre = genre;
         this.releaseYear = releaseYear;
+        this.reviewResponseDTO = reviewResponseDTO;
     }
 
     public String getTitle() {
@@ -36,5 +39,13 @@ public class GameResponseDTO {
 
     public void setReleaseYear(Integer releaseYear) {
         this.releaseYear = releaseYear;
+    }
+
+    public Set<ReviewResponseDTO> getReviewResponseDTO() {
+        return reviewResponseDTO;
+    }
+
+    public void setReviewResponseDTO(Set<ReviewResponseDTO> reviewResponseDTO) {
+        this.reviewResponseDTO = reviewResponseDTO;
     }
 }
