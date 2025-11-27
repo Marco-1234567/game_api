@@ -109,9 +109,14 @@ public class GameService {
     public Page<GameResponseDTO> searchByTitle2(String title, Pageable pageable){
 
         Page<Game> gamePage = repo.searchByTitle2(title, pageable);
+        Page<GameResponseDTO> dto = gamePage.map(game1 -> toGameResponseDTO(game1));    // lambda expression
+        return dto;                                                                           //
+    }
 
-        Page<GameResponseDTO> dto = gamePage.map(game1 -> toGameResponseDTO(game1));
-        return dto;
+    public Page<GameResponseDTO> searchByGenre(String genre, Pageable pageable){
+
+        Page<Game> gamePage = repo.searchByGenre(genre, pageable);
+        return gamePage.map(this::toGameResponseDTO);       //"non static" uses "this". (= method reference)
     }
 
     private Game toGameEntity(GameRequestDTO dto){

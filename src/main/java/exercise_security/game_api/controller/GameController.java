@@ -78,9 +78,18 @@ public class GameController {
     }
 
     @GetMapping("/search2")
-    public ResponseEntity<Page<GameResponseDTO>> searchByTitle2(@RequestParam String title, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "1") int pageSize ){
+    public ResponseEntity<Page<GameResponseDTO>> searchByTitle2(@RequestParam String title, @RequestParam(defaultValue = "0") int page,
+                                                                @RequestParam(defaultValue = "1") int pageSize ){
 
         Pageable pageable = PageRequest.of(page, pageSize);
         return ResponseEntity.ok(service.searchByTitle2(title, pageable));
+    }
+
+    @GetMapping("/search/genre")
+    public ResponseEntity<Page<GameResponseDTO>> searchByGenre(@RequestParam String genre,
+                                                               @RequestParam(defaultValue = "0") int page,
+                                                               @RequestParam(defaultValue = "1") int pageSize){
+        Pageable pageable = PageRequest.of(page, pageSize);
+        return ResponseEntity.ok(service.searchByGenre(genre, pageable));
     }
 }
