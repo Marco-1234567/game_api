@@ -92,4 +92,11 @@ public class GameController {
         Pageable pageable = PageRequest.of(page, pageSize);
         return ResponseEntity.ok(service.searchByGenre(genre, pageable));
     }
+
+    @GetMapping("/top-rated")
+    public ResponseEntity<Page<GameResponseDTO>> getTopRatedGames(@RequestParam(defaultValue = "0") int page,
+                                                                  @RequestParam(defaultValue = "1") int pageSize){
+        Pageable pageable = PageRequest.of(page, pageSize);
+        return ResponseEntity.ok(service.getTopRatedGames(pageable));
+    }
 }

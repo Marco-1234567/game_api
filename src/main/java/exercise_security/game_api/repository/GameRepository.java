@@ -33,6 +33,12 @@ public interface GameRepository extends JpaRepository<Game, Long> {
     @Query("SELECT g FROM Game g WHERE LOWER(g.genre) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     Page<Game> searchByGenre(@Param("keyword") String keyword, Pageable pageable);
 
+    // 4. SQL-version
+    @Query(value = "SELECT GAMES.* FROM games INNER JOIN reviews ON games.id = reviews.game_id WHERE rating > 9", nativeQuery = true)
+    Page<Game> searchTopRatedGames(Pageable pageable);
+
+    // 3. JPQL
+
     // 4. SQL
 //    @Query(value = "SELECT * FROM games WHERE LOWER(g.genre) LIKE LOWER(CONCAT('%', :keyword, '%'))", nativeQuery = true)
 //    Page<Game> searchByGenreSQL(@Param("keyword") String keyword, Pageable pageable);

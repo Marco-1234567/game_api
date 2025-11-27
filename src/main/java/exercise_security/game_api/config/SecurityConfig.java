@@ -64,13 +64,10 @@ public class SecurityConfig {
     ) throws Exception {
 
         AuthenticationManagerBuilder builder = http.getSharedObject(AuthenticationManagerBuilder.class);
-
         builder.userDetailsService(customUserDetailService).passwordEncoder(passwordEncoder);
-
 
         return builder.build();
     }
-
 
     @Bean
     public UserDetailsService userDetailsService(){
