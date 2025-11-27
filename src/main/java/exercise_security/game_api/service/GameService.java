@@ -119,6 +119,11 @@ public class GameService {
         return gamePage.map(this::toGameResponseDTO);       //"non static" uses "this". (= method reference)
     }
 
+    public Page<GameResponseDTO> getTopRatedGames(Pageable pageable){
+        Page<Game> gamePage = repo.searchTopRatedGames(pageable);
+        return gamePage.map(this::toGameResponseDTO);
+    }
+
     private Game toGameEntity(GameRequestDTO dto){
         return new Game(dto.getTitle(), dto.getGenre(), dto.getReleaseYear());
     }
