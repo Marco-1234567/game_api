@@ -23,4 +23,13 @@ public class UserService {
     private AppUserResponseDTO toAppUserResponseDTO( AppUser appUser){
         return new AppUserResponseDTO( appUser.getUsername(), appUser.getPassword(), appUser.getRoles() );
     }
+
+    public AppUser getUserByName(String username){
+        return userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User does not exist"));
+    }
+
+    public void saveUser(AppUser user){
+        AppUser responseUser = userRepository.save(user);
+        // todo handle response? throw exception?
+    }
 }

@@ -27,7 +27,8 @@ CREATE TABLE IF NOT EXISTS roles(
 CREATE TABLE IF NOT EXISTS users(
         id BIGINT PRIMARY KEY AUTO_INCREMENT,
         username VARCHAR(40) NOT NULL,
-        password VARCHAR(80) NOT NULL
+        password VARCHAR(80) NOT NULL,
+        refresh_token VARCHAR(200)
 );
 
 CREATE TABLE IF NOT EXISTS user_roles(

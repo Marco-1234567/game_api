@@ -18,7 +18,7 @@ public class JwtService {
 
     private  final String jwtSecret = "superhemlignyckelsomärlång123456789";
 
-    public String genererateToken(UserDetails userDetails){
+    public String generateToken(UserDetails userDetails){
 
         Map<String,Object> claims = new HashMap<>();
         claims.put("roles", userDetails
@@ -27,19 +27,30 @@ public class JwtService {
                 .map(GrantedAuthority::getAuthority)
                 .toList());
 
-        String token = Jwts.builder()
-                .setClaims(claims)
+        return Jwts.builder()
+                .setClaims(claims)      // före setSubject() annars skrivs över
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*50))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*2)) // 2 minutes
                 .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()), SignatureAlgorithm.HS256)
                 .compact();
-
-        return token;
-
     }
 
-    private Claims extractAllClaims(String token) {
+    public String generateRefreshToken(String username){
+
+        return Jwts.builder().setSubject(username).setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() +  1100000000))
+                .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()), SignatureAlgorithm.HS256)
+                //.signWith(SignatureAlgorithm.HS256, jwtSecret) // deprecated
+                .compact();
+    }
+
+    // Ibrahs kod
+//    public Claims extractClaims(String token) {
+//        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+//    }
+
+    public Claims extractAllClaims(String token) {
         return Jwts
                 .parserBuilder()
                 .setSigningKey(jwtSecret.getBytes()) // eller Keys.hmacShaKeyFor(...)
