@@ -10,6 +10,9 @@ public class GameResponseDTO {
     private Integer releaseYear;
     private Set<ReviewResponseDTO> reviewResponseDTO;
 
+    public GameResponseDTO() {
+    }
+
     public GameResponseDTO(String title, String genre, Integer releaseYear, Set<ReviewResponseDTO> reviewResponseDTO) {
         this.title = title;
         this.genre = genre;
