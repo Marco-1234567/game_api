@@ -124,11 +124,11 @@ public class GameService {
         return gamePage.map(this::toGameResponseDTO);
     }
 
-    private Game toGameEntity(GameRequestDTO dto){
+    protected Game toGameEntity(GameRequestDTO dto){
         return new Game(dto.getTitle(), dto.getGenre(), dto.getReleaseYear());
     }
 
-    private GameResponseDTO toGameResponseDTO(Game game){
+    protected GameResponseDTO toGameResponseDTO(Game game){
 
         Set<ReviewResponseDTO> reviews = game.getReviews() != null
                 ? game.getReviews().stream().map(reviewService::toReviewResponseDTO).collect(Collectors.toSet())

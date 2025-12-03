@@ -22,6 +22,9 @@ public class GameRequestDTO {
     @Min(value = 1900, message = "Minimum year is 1900")
     private Integer releaseYear;
 
+    public GameRequestDTO() {
+    }
+
     public GameRequestDTO(String title, String genre, Integer releaseYear) {
         this.title = title;
         this.genre = genre;
