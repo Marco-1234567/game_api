@@ -21,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 // Depricated in jdk21 @MockBean replacement @MockitoBean
 //@WebMvcTest(GameController.class)
+// I'm using @Autowired instead of @MockBean, and @SpringBootTest and not @WebMvcTest(GameController.class)
 
 @ActiveProfiles("test")
 @SpringBootTest
