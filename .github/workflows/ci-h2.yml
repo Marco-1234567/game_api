@@ -26,4 +26,4 @@ jobs:
 
       # build and run tests
       - name: build and run tests
-        run: maven -B clean verify
+        run: mvn -B clean verify
