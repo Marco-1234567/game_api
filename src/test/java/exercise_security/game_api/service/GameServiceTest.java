@@ -111,8 +111,10 @@ class GameServiceTest {
     @Test
     @DisplayName("Test deleteById() is working properly")
     void testDeleteGameById(){
-        //arrange
-        gameRepository.save(game);
+
+        // arrange: mocka returdata från resursmetoder vi använder.
+        // deleteById() returnerar void, och det går inte att styra "happy path" vid returtyp void.
+        // Lösning: kör testet (act) och verifiera sedan att metoden har anropats
         when(gameRepository.existsById(1L)).thenReturn(true);
 
         //act
