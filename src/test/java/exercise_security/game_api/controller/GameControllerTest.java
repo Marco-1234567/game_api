@@ -55,11 +55,11 @@ class GameControllerTest {
     void testGetById() throws Exception {
 
         // arrange
-        GameRequestDTO gameRequestDTO = new GameRequestDTO("Game 1", "Horror", 2011);
-        gameService.addGame(gameRequestDTO);
+        Game game = new Game("Game 1", "Horror", 2011);
+        Long index = gameRepository.save(game).getId();
 
         // act + assert
-        mockMvc.perform(get("/games/1"))
+        mockMvc.perform(get("/games/" + index))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.title").value("Game 1"))
                 .andExpect(jsonPath("$.genre").value("Horror"));

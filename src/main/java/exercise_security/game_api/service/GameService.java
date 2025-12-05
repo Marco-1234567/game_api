@@ -11,6 +11,7 @@ import exercise_security.game_api.repository.GameRepository;
 import exercise_security.game_api.repository.ReviewRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +38,7 @@ public class GameService {
     public ResponseEntity<GameResponseDTO> getById(Long id) throws RuntimeException {
 
         if (repo.findById(id).isPresent()){
-            return ResponseEntity.ok(toGameResponseDTO( repo.findById(id).get()));
+            return ResponseEntity.status(HttpStatus.CREATED).body(toGameResponseDTO( repo.findById(id).get()));
         } else {
             throw new ResourceNotFoundException("Can't find Game with id = " + id );
         }
