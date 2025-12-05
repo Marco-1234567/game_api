@@ -1,6 +1,7 @@
 package exercise_security.game_api.controller;
 
 import exercise_security.game_api.dto.GameRequestDTO;
+import exercise_security.game_api.model.Game;
 import exercise_security.game_api.repository.GameRepository;
 import exercise_security.game_api.service.GameService;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,12 +48,12 @@ class GameControllerTest {
     void testGetById() throws Exception {
 
         // arrange
-        GameRequestDTO gameRequestDTO = new GameRequestDTO("Game 1", "Horror", 2011);
-        gameService.addGame(gameRequestDTO);
+        Game game = new Game("Game 1", "Horror", 2011);
+        Long index = gameRepository.save(game).getId();
 
         // act + assert
-        mockMvc.perform(get("/games/1"))
-                .andExpect(status().isOk())
+        mockMvc.perform(get("/games/" + index))
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.title").value("Game 1"))
                 .andExpect(jsonPath("$.genre").value("Horror"));
     }
