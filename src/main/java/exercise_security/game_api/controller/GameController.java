@@ -4,7 +4,6 @@ import exercise_security.game_api.dto.GameRequestDTO;
 import exercise_security.game_api.dto.GameResponseDTO;
 import exercise_security.game_api.dto.ReviewRequestDTO;
 import exercise_security.game_api.dto.ReviewResponseDTO;
-import exercise_security.game_api.exception.ResourceNotFoundException;
 import exercise_security.game_api.service.GameService;
 import exercise_security.game_api.service.ReviewService;
 import jakarta.validation.Valid;
@@ -38,10 +37,7 @@ public class GameController {
 
     @GetMapping("/{id}")
     public ResponseEntity<GameResponseDTO> getById(@Valid @PathVariable Long id){
-
         return service.getById(id);
-                //.map(game -> ResponseEntity.ok(game))
-                //.orElseThrow( () -> new ResourceNotFoundException("Can't find Game with id = " + id ));
     }
 
     @PostMapping
@@ -68,7 +64,7 @@ public class GameController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteGame(@Valid @PathVariable Long id){
-        boolean result = service.deteteById(id);
+        boolean result = service.deleteById(id);
         return result ? ResponseEntity.ok("yes!") : ResponseEntity.notFound().build();
     }
 

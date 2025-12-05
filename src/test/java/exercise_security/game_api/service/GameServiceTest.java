@@ -5,7 +5,6 @@ import exercise_security.game_api.dto.GameResponseDTO;
 import exercise_security.game_api.exception.ResourceNotFoundException;
 import exercise_security.game_api.model.Game;
 import exercise_security.game_api.repository.GameRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -114,12 +113,14 @@ class GameServiceTest {
         // arrange: mocka returdata från resursmetoder vi använder.
         // deleteById() returnerar void, och det går inte att styra "happy path" vid returtyp void.
         // Lösning: kör testet (act) och verifiera sedan att metoden har anropats
-        //when(gameRepository.deleteById(1L)).thenReturn();
+        //when(gameRepository.deleteById(1L)).thenReturn(true);
+        when(gameRepository.existsById(1L)).thenReturn(true);
 
         //act
-        boolean result = gameService.deteteById(1L);
+        boolean result = gameService.deleteById(1L);
 
         // assert
+        verify(gameRepository, times(1)).existsById(1L);
         verify(gameRepository, times(1)).deleteById(1L);
         verify(gameRepository, never()).save(game);
     }
