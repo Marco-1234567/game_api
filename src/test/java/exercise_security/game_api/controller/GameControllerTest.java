@@ -60,7 +60,7 @@ class GameControllerTest {
 
         // act + assert
         mockMvc.perform(get("/games/1"))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.title").value("Game 1"))
                 .andExpect(jsonPath("$.genre").value("Horror"));
     }
