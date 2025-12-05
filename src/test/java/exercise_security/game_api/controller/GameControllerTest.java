@@ -83,4 +83,17 @@ class GameControllerTest {
                 .andExpect(jsonPath("$.genre").value("Horror"))
                 .andExpect(jsonPath("$.releaseYear").value("2011"));
     }
+
+    @Test
+    @DisplayName("Test Add incomplete Game -> http response 400")
+    void testPOSTAddGame_Http400() throws Exception {
+        // arrange: test http response code 400 bad request
+        Game input = new Game("", "Horror", 2011);
+
+        // act + assert
+        mockMvc.perform(post("/games")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(input)))
+                .andExpect( status().is(400));
+    }
 }
