@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +46,7 @@ public class GameController {
 
     @PostMapping
     public ResponseEntity<GameResponseDTO> addGame( @Valid @RequestBody GameRequestDTO gameRequestDTO){
-        return service.addGame(gameRequestDTO).map(game -> ResponseEntity.ok(game)).orElse(ResponseEntity.status(418).build());
+        return service.addGame(gameRequestDTO).map(game -> ResponseEntity.status(HttpStatus.CREATED).body(game)).orElse(ResponseEntity.status(418).build());
     }
 
     @PostMapping("/review/{gameId}")
