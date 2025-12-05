@@ -1,6 +1,8 @@
 package exercise_security.game_api.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import exercise_security.game_api.dto.GameRequestDTO;
+import exercise_security.game_api.model.Game;
 import exercise_security.game_api.repository.GameRepository;
 import exercise_security.game_api.service.GameService;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,12 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -37,6 +42,9 @@ class GameControllerTest {
     @Autowired
     private GameService gameService;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @BeforeEach
     void setUp() {
         gameRepository.deleteAll();
@@ -52,8 +60,27 @@ class GameControllerTest {
 
         // act + assert
         mockMvc.perform(get("/games/1"))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.title").value("Game 1"))
                 .andExpect(jsonPath("$.genre").value("Horror"));
+    }
+
+    @Test
+    @DisplayName("Test AddGame() http response 201")
+    void testPOSTAddGame() throws Exception {
+        // arrange
+        Game input = new Game("Game 1", "Horror", 2011);
+        // without objectmapper
+        //String sInput = "{\n\"title\":\"Game 1\",\n \"genre\":\"Horror\",\n \"releaseYear\": 2011 \n}";
+
+        // act + assert
+        mockMvc.perform(post("/games")
+                .contentType(MediaType.APPLICATION_JSON)
+                        //.content(sInput))
+                        .content(objectMapper.writeValueAsString(input)))
+                .andExpect( status().isCreated())
+                .andExpect(jsonPath("$.title").value("Game 1"))
+                .andExpect(jsonPath("$.genre").value("Horror"))
+                .andExpect(jsonPath("$.releaseYear").value("2011"));
     }
 }
