@@ -1,11 +1,11 @@
-INSERT INTO games(title, genre, release_year)
-VALUES("The Game", "Horror", "2010"),
-     ("Mississippi River", "Adventure", "2020");
+INSERT INTO games(title, genre, release_year) VALUES
+    ('The Game', 'Horror', '2010'),
+    ('Mississippi River', 'Adventure', '2020');
 
 INSERT INTO reviews(review, rating, game_id) VALUES
-    ("A master pice!", 10, 1),
-    ("Not bad.", 5, 1),
-    ("Don't see it at all.", 1, 2);
+    ('A master pice!', 10, 1),
+    ('Not bad.', 5, 1),
+    ('Don''t see it at all.', 1, 2);
 
 INSERT INTO roles(name) VALUES ('ROLE_USER');
 INSERT INTO roles(name) VALUES ('ROLE_ADMIN');
