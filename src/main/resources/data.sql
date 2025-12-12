@@ -1,7 +1,6 @@
-INSERT INTO games(title, genre, release_year)
-VALUES
+INSERT INTO games(title, genre, release_year) VALUES
     ('The Game', 'Horror', '2010'),
-     ('Mississippi River', 'Adventure', '2020');
+    ('Mississippi River', 'Adventure', '2020');
 
 INSERT INTO reviews(review, rating, game_id) VALUES
     ('A master pice!', 10, 1),
