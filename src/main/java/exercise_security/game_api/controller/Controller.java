@@ -39,7 +39,7 @@ public class Controller {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO){
+    public String login(@RequestBody LoginRequestDTO loginRequestDTO){
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -57,7 +57,9 @@ public class Controller {
         userToUpdate.setRefreshToken(refreshToken);
         userService.saveUser(userToUpdate);
 
-        return ResponseEntity.ok(new JwtDTO(accessToken, refreshToken));
+        //return ResponseEntity.ok(new JwtDTO(accessToken, refreshToken));
+        return accessToken;
+
     }
 
     @PostMapping("/refresh")
