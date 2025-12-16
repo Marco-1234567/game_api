@@ -3,40 +3,43 @@ services:
     image: mysql:8.0
     restart: unless-stopped
 
+    secrets:
+      - mysql_password
 
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: prod_db
+      MYSQL_ROOT_PASSWORD: /run/secrets/mysql_password
+      MYSQL_DATABASE: ${MYSQL_DATABASE}   #prod_db
 
     volumes:
       - mydata:/var/lib/mysql
 
     networks:
       - spring-network
-    ports:
-      - "3307:3306"
+
+# for debuging purpose MySQL Workbench
+#    ports:
+#      - "3307:3306"
 
     healthcheck:
-      test: ["CMD", "mysqladmin","ping","-h","localhost","-u","root","-prootpassword" ]
+      test: ["CMD", "mysqladmin","ping","-h","localhost","-u","root","-p$MYSQL_PASSWORD"]
       interval: 10s
       timeout: 5s
       retries: 5
 
   spring-app:
-    #    image: spring-docker-demo:v1
-    #    alternativt
+    #  build: .  alt: image: spring-docker-demo:v1
     build: .
     restart: unless-stopped
     ports:
-      - "8081:8080"
-      #- "8081:8081"
+      - ${PORT_TO_EXPOSE}:8081   # host port:container port
 
     environment:
 
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/prod_db
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: rootpassword
-      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.MySQLDialect
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE:-prod_db}
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER_ROOT:-root}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+      SPRING_JPA_DATABASE_PLATFORM: ${DIALECT}
 
     depends_on:
       mysql:
@@ -47,7 +50,7 @@ services:
 
   gateway-app:
     image: gateway-app
-
+    #image: alt build: ../ ... statisk path to Dockerfile in other app
     ports:
       - "8082:8080"
 
@@ -62,3 +65,7 @@ volumes:
   mydata:
     driver:
       local
+
+secrets:
+  mysql_password:
+    file: secrets/mysql_password.txt

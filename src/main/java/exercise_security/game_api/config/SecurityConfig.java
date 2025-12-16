@@ -70,17 +70,17 @@ public class SecurityConfig {
         return builder.build();
     }
 
-    @Bean
-    public UserDetailsService userDetailsService(){
-
-        UserDetails user = User
-                .withUsername("user")
-                .password(passwordEncoder().encode("user123"))
-                .roles("USER")
-                .build();
-
-        return new InMemoryUserDetailsManager(user);
-    }
+//    @Bean
+//    public UserDetailsService userDetailsService(){
+//
+//        UserDetails user = User
+//                .withUsername("user")
+//                .password(passwordEncoder().encode("user123"))
+//                .roles("USER")
+//                .build();
+//
+//        return new InMemoryUserDetailsManager(user);
+//    }
 
 //    @Bean
 //    public UserDetailsService userDetails(){    // in memory user details
