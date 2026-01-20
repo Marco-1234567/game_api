@@ -50,7 +50,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     // denna täcker in typ alla @RequestBody (tror jag)
     // denna täcker in typ alla @RequestParameters, @PathVariable
-    @ExceptionHandler(ConstraintDeclarationException.class)
+    @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex){
 
         Map<String, Object> body = new HashMap<>();
